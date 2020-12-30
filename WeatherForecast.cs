@@ -1,6 +1,6 @@
 using System;
 
-namespace customer_onboarding_api
+namespace Origin08.CustomerOnboarding
 {
     public class WeatherForecast
     {

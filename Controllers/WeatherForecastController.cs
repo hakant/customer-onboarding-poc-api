@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace customer_onboarding_api.Controllers
+namespace Origin08.CustomerOnboarding.Controllers
 {
     [ApiController]
     [Route("[controller]")]

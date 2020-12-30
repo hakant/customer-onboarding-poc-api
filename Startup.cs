@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace customer_onboarding_api
+namespace Origin08.CustomerOnboarding
 {
     public class Startup
     {

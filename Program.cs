@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace customer_onboarding_api
+namespace Origin08.CustomerOnboarding
 {
     public class Program
     {
