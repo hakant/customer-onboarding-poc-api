@@ -10,7 +10,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
 {
     public class Details
     {
-        public record Query(string IntakeId) : IRequest<IntakeEnvelope>;
+        public record Query(string IntakeId) : IRequest<IntakeAndQuestionsEnvelope>;
 
         public class QueryValidator : AbstractValidator<Query>
         {
@@ -31,7 +31,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
             }
         }
 
-        public class Handler : IRequestHandler<Query, IntakeEnvelope>
+        public class Handler : IRequestHandler<Query, IntakeAndQuestionsEnvelope>
         {
             private readonly CustomerOnboardingContext _context;
 
@@ -40,7 +40,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 _context = context;
             }
 
-            public async Task<IntakeEnvelope> Handle(Query query, CancellationToken cancellationToken)
+            public async Task<IntakeAndQuestionsEnvelope> Handle(Query query, CancellationToken cancellationToken)
             {
                 var intake = await _context.Intakes
                     .Include(i => i.Answers)
@@ -51,7 +51,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
 
                 var questions = await _context.FetchQuestions(cancellationToken);
 
-                return intake is not null ? new IntakeEnvelope(intake, questions) : null;
+                return intake is not null ? new IntakeAndQuestionsEnvelope(intake, questions) : null;
             }
         }
     }

@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Origin08.CustomerOnboarding.Features.Intakes
@@ -17,15 +18,20 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
         }
 
         [HttpGet]
-        public Task<IntakeEnvelope> Get([FromQuery] string intakeId, CancellationToken cancellationToken)
+        public Task<IntakeAndQuestionsEnvelope> Get([FromQuery] string intakeId, CancellationToken cancellationToken)
         {
             return _mediator.Send(new Details.Query(intakeId), cancellationToken);
         }
 
         [HttpPost]
-        public Task<IntakeEnvelope> Create([FromBody] Create.Command command, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<ActionResult<string>> Create(
+            [FromBody] Create.Command command,
+            CancellationToken cancellationToken
+        )
         {
-            return _mediator.Send(command, cancellationToken);
+            var newIntakeId = await _mediator.Send(command, cancellationToken);
+            return CreatedAtAction(nameof(Get), new {intakeId = newIntakeId}, newIntakeId);
         }
 
         [HttpPut]
