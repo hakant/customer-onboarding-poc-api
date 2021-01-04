@@ -1,0 +1,64 @@
+[
+  {
+    "Id": "1",
+    "Text": "For whom are you investing?",
+    "Options": [
+      {
+        "Text": "For myself",
+        "Code": "one-person"
+      },
+      {
+        "Text": "For myself and my partner",
+        "Code": "two-person"
+      }
+    ]
+  },
+  {
+    "Id": "2",
+    "Text": "What is the size of your household?",
+    "Options": [
+      {
+        "Text": "Only myself",
+        "Code": "1-person"
+      },
+      {
+        "Text": "2 or 3",
+        "Code": "2-3-person"
+      },
+      {
+        "Text": "More than 3",
+        "Code": "more-than-3-person"
+      }
+    ]
+  },
+  {
+    "Id": "3",
+    "Text": "What is your total yearly gross income?",
+    "Options": [
+      {
+        "Text": "Higher than € 150.000",
+        "Code": "higher-than-150K"
+      },
+      {
+        "Text": "€ 100.000 to € 150.000",
+        "Code": "100K-to-150K"
+      },
+      {
+        "Text": "€ 60.000 to € 100.000",
+        "Code": "60K-to-100K"
+      },
+      {
+        "Text": "€ 37.000 to € 60.000",
+        "Code": "37K-to-60K"
+      },
+      {
+        "Text": "€ 20.000 to € 37.000",
+        "Code": "20K-to-37K"
+      },
+      {
+        "Text": "Lower than € 20.000",
+        "Code": "lower-than-20K"
+      }
+    ]
+  }
+]

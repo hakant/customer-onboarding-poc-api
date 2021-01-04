@@ -62,6 +62,8 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 );
 
                 if (intake is null) return null;
+                
+                var questions = await _context.FetchQuestions(cancellationToken);
 
                 var answers = intake.Answers.Where(
                         a => a.QuestionId != command.QuestionId
@@ -78,7 +80,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 intake.Answers = answers;
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return new IntakeEnvelope(intake);
+                return new IntakeEnvelope(intake, questions);
             }
         }
     }

@@ -45,11 +45,13 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 var intake = await _context.Intakes
                     .Include(i => i.Answers)
                     .FirstOrDefaultAsync(
-                    i => i.IntakeId == query.IntakeId,
-                    cancellationToken: cancellationToken
-                );
+                        i => i.IntakeId == query.IntakeId,
+                        cancellationToken: cancellationToken
+                    );
 
-                return intake is not null ? new IntakeEnvelope(intake) : null;
+                var questions = await _context.FetchQuestions(cancellationToken);
+
+                return intake is not null ? new IntakeEnvelope(intake, questions) : null;
             }
         }
     }

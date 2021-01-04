@@ -19,7 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure" />
+    <Content Remove="Data\QuestionnaireV1.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Questionnaires\QuestionnaireV1.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

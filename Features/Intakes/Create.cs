@@ -47,7 +47,9 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                     cancellationToken: cancellationToken
                 );
 
-                if (intake is not null) return new IntakeEnvelope(intake);
+                var questions = await _context.FetchQuestions(cancellationToken);
+
+                if (intake is not null) return new IntakeEnvelope(intake, questions);
 
                 intake = new IntakeEntity
                 {
@@ -57,7 +59,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 await _context.AddAsync(intake, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return new IntakeEnvelope(intake);
+                return new IntakeEnvelope(intake, questions);
             }
         }
     }
