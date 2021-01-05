@@ -24,6 +24,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 var intake = new IntakeEntity
                 {
                     IntakeId = Guid.NewGuid().ToString(),
+                    CurrentQuestionId = "1",
                     CreatedDate = DateTime.UtcNow,
                 };
                 await _context.AddAsync(intake, cancellationToken);
