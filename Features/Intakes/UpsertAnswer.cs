@@ -72,7 +72,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 {
                     Id = Guid.NewGuid().ToString(),
                     QuestionId = command.QuestionId,
-                    Answer = command.Answer
+                    AnswerCode = command.Answer
                 });
 
                 intake.Answers = answers;
