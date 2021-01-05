@@ -18,7 +18,8 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
         }
 
         [HttpGet]
-        public Task<IntakeAndQuestionsEnvelope> Get([FromQuery] string intakeId, CancellationToken cancellationToken)
+        [Route("{intakeId}")]
+        public Task<IntakeAndQuestionsEnvelope> Get(string intakeId, CancellationToken cancellationToken)
         {
             return _mediator.Send(new Details.Query(intakeId), cancellationToken);
         }
@@ -35,11 +36,14 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
         }
 
         [HttpPut]
+        [Route("{intakeId}")]
         public Task<IntakeEnvelope> UpsertAnswer(
-            [FromBody] UpsertAnswer.Command command,
+            string intakeId,
+            [FromBody] UpsertAnswerModel upsertAnswerModel,
             CancellationToken cancellationToken
         )
         {
+            var command = new UpsertAnswer.Command(intakeId, upsertAnswerModel.QuestionId, upsertAnswerModel.Answer);
             return _mediator.Send(command, cancellationToken);
         }
     }
