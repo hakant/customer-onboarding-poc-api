@@ -76,6 +76,8 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 });
 
                 intake.Answers = answers;
+                intake.CurrentQuestionId = command.QuestionId;
+
                 await _context.SaveChangesAsync(cancellationToken);
 
                 return new IntakeEnvelope(intake);
