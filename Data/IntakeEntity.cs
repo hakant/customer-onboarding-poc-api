@@ -9,7 +9,7 @@ namespace Origin08.CustomerOnboarding.Data
         [Key]
         public string IntakeId { get; set; }
         public string CurrentQuestionId { get; set; }
-        public List<AnswerEntity> Answers { get; set; } = new List<AnswerEntity>();
+        public List<AnswerEntity> Answers { get; set; } = new();
         public DateTime CreatedDate { get; set; }
     }
 }
