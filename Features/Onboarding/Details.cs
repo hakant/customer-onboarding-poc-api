@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -7,27 +6,28 @@ using Microsoft.EntityFrameworkCore;
 using Origin08.CustomerOnboarding.Data;
 using Origin08.CustomerOnboarding.Features.Shared;
 
-namespace Origin08.CustomerOnboarding.Features.Intakes
+namespace Origin08.CustomerOnboarding.Features.Onboarding
 {
     public class Details
     {
-        public record Query(string IntakeId) : IRequest<IntakeAndQuestionsEnvelope>;
+        public record Query(string OnboardingId) : IRequest<OnboardingWorkflowEnvelope>;
 
         public class QueryValidator : AbstractValidator<Query>
         {
             public QueryValidator()
             {
-                RuleFor(x => x.IntakeId)
+                RuleFor(x => x.OnboardingId)
                     .NotNull()
-                    .NotEmpty();
-                RuleFor(x => x.IntakeId)
+                    .NotEmpty()
+                    ;
+                RuleFor(x => x.OnboardingId)
                     .Must(Validations.BeValidGuid)
-                    .WithMessage("Intake Id has to be a valid Guid.")
+                    .WithMessage("Onboarding Id has to be a valid Guid.")
                     ;
             }
         }
 
-        public class Handler : IRequestHandler<Query, IntakeAndQuestionsEnvelope>
+        public class Handler : IRequestHandler<Query, OnboardingWorkflowEnvelope>
         {
             private readonly CustomerOnboardingContext _context;
 
@@ -36,18 +36,16 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                 _context = context;
             }
 
-            public async Task<IntakeAndQuestionsEnvelope> Handle(Query query, CancellationToken cancellationToken)
+            public async Task<OnboardingWorkflowEnvelope> Handle(Query query, CancellationToken cancellationToken)
             {
-                var intake = await _context.Intakes
-                    .Include(i => i.Answers)
+                var onboarding = await _context.OnboardingWorkflows
+                    .Include(i => i.IdCheckWorkflows)
                     .FirstOrDefaultAsync(
-                        i => i.IntakeId == query.IntakeId,
+                        i => i.OnboardingId == query.OnboardingId,
                         cancellationToken: cancellationToken
                     );
 
-                var questions = await _context.FetchQuestions(cancellationToken);
-
-                return intake is not null ? new IntakeAndQuestionsEnvelope(intake, questions) : null;
+                return onboarding is not null ? new OnboardingWorkflowEnvelope(onboarding) : null;
             }
         }
     }

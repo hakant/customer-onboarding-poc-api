@@ -6,6 +6,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Origin08.CustomerOnboarding.Data;
+using Origin08.CustomerOnboarding.Features.Shared;
 
 namespace Origin08.CustomerOnboarding.Features.Intakes
 {
@@ -22,7 +23,7 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                     .NotEmpty();
 
                 RuleFor(x => x.IntakeId)
-                    .Must(BeValidGuid)
+                    .Must(Validations.BeValidGuid)
                     .WithMessage("Intake Id has to be a valid Guid.")
                     ;
 
@@ -35,11 +36,6 @@ namespace Origin08.CustomerOnboarding.Features.Intakes
                     .NotNull()
                     .NotEmpty()
                     ;
-            }
-
-            private static bool BeValidGuid(string intakeId)
-            {
-                return Guid.TryParse(intakeId, out _);
             }
         }
 
