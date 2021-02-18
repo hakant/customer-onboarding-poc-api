@@ -79,6 +79,7 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
                     new IdCheckWorkflowEntity
                     {
                         IdCheckWorkflowId = Guid.NewGuid().ToString(),
+                        IdCheckIndex = 1,
                         Status = IdCheckStatus.Initial
                     }
                 };
@@ -88,6 +89,7 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
                     idWorkflows.Add(new IdCheckWorkflowEntity
                     {
                         IdCheckWorkflowId = Guid.NewGuid().ToString(),
+                        IdCheckIndex = 2,
                         Status = IdCheckStatus.Initial
                     });
                 }

@@ -1,8 +1,11 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Origin08.CustomerOnboarding.Features.Onboarding.Hub;
 
 namespace Origin08.CustomerOnboarding.Features.Onboarding
 {
@@ -11,10 +14,15 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
     public class OnboardingController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly IHubContext<IdCheckStatusHub, IIdCheckStatusHubClient> _idCheckStatusHub;
 
-        public OnboardingController(IMediator mediator)
+        public OnboardingController(
+            IMediator mediator,
+            IHubContext<IdCheckStatusHub, IIdCheckStatusHubClient> idCheckStatusHub
+        )
         {
             _mediator = mediator;
+            _idCheckStatusHub = idCheckStatusHub;
         }
 
         [HttpGet]
@@ -36,16 +44,33 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
         }
 
         [HttpPut]
-        [Route("{onboardingId}/{idCheckWorkflowId}")]
-        public Task<OnboardingWorkflowEnvelope> UpdateIdCheckStatus(
+        [Route("{onboardingId}/{idCheckWorkflowId}/{idCheckIndex}")]
+        public async Task<OnboardingWorkflowEnvelope> UpdateIdCheckStatus(
             string onboardingId,
             string idCheckWorkflowId,
+            int idCheckIndex,
             UpdateIdCheckStatusModel idCheckStatus,
             CancellationToken cancellationToken
         )
         {
-            var command = new UpdateIdCheckStatus.Command(onboardingId, idCheckWorkflowId, idCheckStatus.Status);
-            return _mediator.Send(command, cancellationToken);
+            var command = new UpdateIdCheckStatus.Command(
+                onboardingId,
+                idCheckWorkflowId,
+                idCheckStatus.Status
+            );
+            var result = await _mediator.Send(command, cancellationToken);
+
+            await _idCheckStatusHub
+                .Clients
+                .Group("SignalR")
+                .IdCheckStatusUpdateReceived(
+                    new IdCheckStatusUpdate(
+                        idCheckWorkflowId,
+                        idCheckIndex,
+                        idCheckStatus.Status.ToString()
+                    )
+                );
+            return result;
         }
     }
 }

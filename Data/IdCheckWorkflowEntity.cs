@@ -17,6 +17,7 @@ namespace Origin08.CustomerOnboarding.Data
         [Key]
         public string IdCheckWorkflowId { get; set; }
         public string OnboardingWorkflowId { get; set; }
+        public int IdCheckIndex { get; set; }
         public IdCheckStatus Status { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Origin08.CustomerOnboarding.Data;
+using Origin08.CustomerOnboarding.Features.Onboarding.Hub;
 
 namespace Origin08.CustomerOnboarding
 {
@@ -50,6 +51,9 @@ namespace Origin08.CustomerOnboarding
                 .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
 
             services.AddAutoMapper(GetType().Assembly);
+
+            services.AddSignalR()
+                .AddAzureSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,15 +61,21 @@ namespace Origin08.CustomerOnboarding
         {
             app.UseCors(builder =>
                 builder
-                    .AllowAnyOrigin()
+                    .WithOrigins("http://localhost:4200")
+                    .WithOrigins("http://localhost:4201")
                     .AllowAnyHeader()
-                    .AllowAnyMethod());
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                );
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "customer_onboarding_api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint(
+                    "/swagger/v1/swagger.json",
+                    "customer_onboarding_api v1")
+                );
             }
 
             app.UseHttpsRedirection();
@@ -73,6 +83,8 @@ namespace Origin08.CustomerOnboarding
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints => { endpoints.MapHub<IdCheckStatusHub>("/hubs/id-check-status"); });
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
