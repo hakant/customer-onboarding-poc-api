@@ -62,7 +62,7 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
 
             await _idCheckStatusHub
                 .Clients
-                .Group("SignalR")
+                .Group(onboardingId)
                 .IdCheckStatusUpdateReceived(
                     new IdCheckStatusUpdate(
                         idCheckWorkflowId,

@@ -66,7 +66,7 @@ namespace Origin08.CustomerOnboarding
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
-                );
+            );
 
             if (env.IsDevelopment())
             {
@@ -84,7 +84,10 @@ namespace Origin08.CustomerOnboarding
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapHub<IdCheckStatusHub>("/hubs/id-check-status"); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<IdCheckStatusHub>("/hubs/id-check-status");
+            });
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

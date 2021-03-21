@@ -1,10 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using Origin08.CustomerOnboarding.Data;
 
 namespace Origin08.CustomerOnboarding.Features.Onboarding.Hub
 {
-    public record IdCheckStatusUpdate(string IdCheckWorkflowId, int IdCheckIndex, string Status);
+    public record IdCheckStatusUpdate(
+        string IdCheckWorkflowId,
+        int IdCheckIndex,
+        string Status
+    );
 
     public interface IIdCheckStatusHubClient
     {
@@ -15,16 +18,24 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding.Hub
     {
         public Task BroadcastIdCheckStatus(IdCheckStatusUpdate statusUpdate) =>
             Clients.All.IdCheckStatusUpdateReceived(statusUpdate);
-        
+
+        public async Task JoinGroup(string onboardingId)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, onboardingId);
+        }
+
+        public async Task LeaveGroup(string onboardingId)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, onboardingId);
+        }
+
         public override async Task OnConnectedAsync()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR");
             await base.OnConnectedAsync();
         }
-        
+
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR");
             await base.OnDisconnectedAsync(exception);
         }
     }
