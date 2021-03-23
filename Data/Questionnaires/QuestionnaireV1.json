@@ -63,6 +63,32 @@
   },
   {
     "Id": "4",
+    "Text": "What percentage of your net income do you spend on fixed costs?",
+    "Options": [
+      {
+        "Text": "Lower than 10%",
+        "Code": "lower-than-10%"
+      },
+      {
+        "Text": "Between 10% and 25%",
+        "Code": "between-10%-25%"
+      },
+      {
+        "Text": "Between 25% and 50%",
+        "Code": "between-25%-50%"
+      },
+      {
+        "Text": "Between 50% and 75%",
+        "Code": "between-50%-75%"
+      },
+      {
+        "Text": "More than 75%",
+        "Code": "more-than-75%"
+      }
+    ]
+  },
+  {
+    "Id": "5",
     "Text": "Thank you. You've answered all the questions. Now it's time to open your account!",
     "Options": []
   }

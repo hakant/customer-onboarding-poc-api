@@ -63,6 +63,7 @@ namespace Origin08.CustomerOnboarding
                 builder
                     .WithOrigins("http://localhost:4200")
                     .WithOrigins("http://localhost:4201")
+                    .WithOrigins("http://localhost:4202")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
