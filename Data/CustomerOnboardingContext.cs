@@ -10,7 +10,6 @@ namespace Origin08.CustomerOnboarding.Data
         }
 
         public DbSet<IntakeEntity> Intakes { get; set; }
-        
         public DbSet<OnboardingWorkflowEntity> OnboardingWorkflows { get; set; }
         public DbSet<QuestionnaireEntity> Questionnaires { get; set; }
     }

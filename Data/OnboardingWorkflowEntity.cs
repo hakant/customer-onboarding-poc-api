@@ -11,6 +11,7 @@ namespace Origin08.CustomerOnboarding.Data
         public string IntakeId { get; set; }
         public IntakeEntity Intake { get; set; }
         public IEnumerable<IdCheckWorkflowEntity> IdCheckWorkflows { get; set; }
+        public string ContactPhoneNumber { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

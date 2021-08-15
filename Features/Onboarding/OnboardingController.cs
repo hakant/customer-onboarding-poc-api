@@ -42,6 +42,20 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
             var onboardingId = await _mediator.Send(command, cancellationToken);
             return CreatedAtAction(nameof(Get), new {onboardingId = onboardingId}, onboardingId);
         }
+        
+        [HttpPut]
+        [Route("{onboardingId}/contactPhoneNumber/{phoneNumber}")]
+        public async Task<OnboardingWorkflowEnvelope> UpsertContactPhoneNumber(
+            string onboardingId,
+            string phoneNumber,
+            CancellationToken cancellationToken
+        )
+        {
+            var command = new UpsertContactPhoneNumber.Command(onboardingId, phoneNumber);
+            var result = await _mediator.Send(command, cancellationToken);
+            
+            return result;
+        }
 
         [HttpPut]
         [Route("{onboardingId}/{idCheckWorkflowId}/{idCheckIndex}")]
