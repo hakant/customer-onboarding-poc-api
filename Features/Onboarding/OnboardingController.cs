@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -52,6 +51,27 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
         )
         {
             var command = new UpsertContactPhoneNumber.Command(onboardingId, phoneNumber);
+            var result = await _mediator.Send(command, cancellationToken);
+            
+            return result;
+        }
+        
+        [HttpPut]
+        [Route("{onboardingId}/personalDetails/{personIndex}")]
+        public async Task<OnboardingWorkflowEnvelope> UpsertPersonalDetails(
+            string onboardingId,
+            int personIndex,
+            UpdatePersonalDetailsModel personalDetails,
+            CancellationToken cancellationToken
+        )
+        {
+            var command = new UpdatePersonalDetails.Command(
+                onboardingId,
+                personIndex,
+                personalDetails.Name,
+                personalDetails.Surname,
+                personalDetails.SocialSecurityNumber);
+            
             var result = await _mediator.Send(command, cancellationToken);
             
             return result;

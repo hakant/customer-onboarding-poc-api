@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -79,8 +78,19 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
                     new IdCheckWorkflowEntity
                     {
                         IdCheckWorkflowId = Guid.NewGuid().ToString(),
+                        OnboardingWorkflowId = onboarding.OnboardingId,
                         IdCheckIndex = 1,
                         Status = IdCheckStatus.Initial
+                    }
+                };
+
+                var personalDetails = new List<PersonalDetailsEntity>()
+                {
+                    new PersonalDetailsEntity
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        OnboardingWorkflowId = onboarding.OnboardingId,
+                        PersonIndex = 1
                     }
                 };
                 
@@ -89,12 +99,24 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
                     idWorkflows.Add(new IdCheckWorkflowEntity
                     {
                         IdCheckWorkflowId = Guid.NewGuid().ToString(),
+                        OnboardingWorkflowId = onboarding.OnboardingId,
                         IdCheckIndex = 2,
                         Status = IdCheckStatus.Initial
                     });
+
+                    personalDetails.Add(
+                        new PersonalDetailsEntity
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            OnboardingWorkflowId = onboarding.OnboardingId,
+                            PersonIndex = 2
+                        }
+                    );
                 }
 
                 onboarding.IdCheckWorkflows = idWorkflows;
+                onboarding.PersonalDetails = personalDetails;
+                
                 await _context.AddAsync(onboarding, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
 

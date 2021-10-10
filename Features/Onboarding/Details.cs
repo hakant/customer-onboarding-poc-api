@@ -39,6 +39,7 @@ namespace Origin08.CustomerOnboarding.Features.Onboarding
             public async Task<OnboardingWorkflowEnvelope> Handle(Query query, CancellationToken cancellationToken)
             {
                 var onboarding = await _context.OnboardingWorkflows
+                    .Include(i => i.PersonalDetails)
                     .Include(i => i.IdCheckWorkflows)
                     .FirstOrDefaultAsync(
                         i => i.OnboardingId == query.OnboardingId,
