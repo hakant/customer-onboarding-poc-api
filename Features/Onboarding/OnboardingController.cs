@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Origin08.CustomerOnboarding.Features.Onboarding.Hub;
+using Origin08.CustomerOnboarding.Features.Onboarding.IdCheck;
+using Origin08.CustomerOnboarding.Features.Onboarding.PersonalDetails;
+using Origin08.CustomerOnboarding.Features.Onboarding.PhoneNumber;
 
 namespace Origin08.CustomerOnboarding.Features.Onboarding
 {

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Origin08.CustomerOnboarding.Data;
 using Origin08.CustomerOnboarding.Features.Shared;
 
-namespace Origin08.CustomerOnboarding.Features.Onboarding
+namespace Origin08.CustomerOnboarding.Features.Onboarding.PhoneNumber
 {
     public class UpsertContactPhoneNumber
     {
